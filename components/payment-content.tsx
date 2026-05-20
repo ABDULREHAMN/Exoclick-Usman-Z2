@@ -69,14 +69,14 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
     {
       id: "pm-1",
       type: "payoneer",
-      accountHolderName: "Abdul Rehman",
-      email: "abdul.rehman.soashraf@gmail.com",
+      accountHolderName: "Shahid Usman",
+      email: "zahidusman0072@gmail.com",
       country: "Pakistan",
       currency: "USD",
       status: "Active",
       isDefault: true,
       priority: 1,
-      addedDate: "Jan 15, 2026",
+      addedDate: "Apr 30, 2026",
     },
   ])
 
@@ -135,12 +135,12 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
     return () => clearInterval(interval)
   }, [withdrawalHistory])
 
-  const availableBalance = 0
-  const pendingBalance = 0
-  const totalEarnings = 0
+  const availableBalance = 1086.39
+  const pendingBalance = 145.44
+  const totalEarnings = 1231.83
   const totalPayments = 0
-  const thisMonthEarnings = 0
-  const nextWithdrawalDate = ""
+  const thisMonthEarnings = 580.27
+  const nextWithdrawalDate = "2026-05-25"
 
   const paymentEntries = []
 
