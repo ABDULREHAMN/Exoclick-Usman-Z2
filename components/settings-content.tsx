@@ -27,7 +27,7 @@ export function SettingsContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" placeholder="Enter your full name" defaultValue="Abdul Rehman" />
+                <Input id="name" placeholder="Enter your full name" defaultValue="Shahid Usman" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address</Label>
@@ -35,12 +35,12 @@ export function SettingsContent() {
                   id="email"
                   type="email"
                   placeholder="Enter your email"
-                  defaultValue="abdulrehmanseoexperti@gmail.com"
+                  defaultValue="zahidusman0072@gmail.com"
                 />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="username">Username</Label>
-                <Input id="username" placeholder="Enter your username" defaultValue="rehseo007" />
+                <Input id="username" placeholder="Enter your username" defaultValue="shahidusman" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="company">Company</Label>
