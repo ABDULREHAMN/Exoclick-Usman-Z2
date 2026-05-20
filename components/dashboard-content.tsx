@@ -19,6 +19,7 @@ import {
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { WithdrawalHistory } from "@/components/withdrawal-history"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -79,12 +80,16 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     }
   }
 
-  const availableBalance = 1036.61
+  const availableBalance = 591.83
   const pendingBalance = 145.44
-  const thisMonthEarnings = 530.49
-  const totalPayments = 0
+  const thisMonthEarnings = 1162.05
+  const lastMonthEarnings = 20.66
+  const thisMonthForecast = 1673.33
+  const growthRate = ((thisMonthEarnings - lastMonthEarnings) / lastMonthEarnings * 100).toFixed(1)
+  const forecastGrowth = ((thisMonthForecast - thisMonthEarnings) / thisMonthEarnings * 100).toFixed(1)
+  const totalPayments = 590.22
   const totalEarnings = 1182.05
-  const nextWithdrawalDate = "2026-05-25"
+  const nextWithdrawalDate = "2026-06-02"
 
   const allReportData = [
     { date: "Apr 30, 2026", impressions: 6433, clicks: 229, revenue: 20.22, ctr: "3.56%", ecpm: "14.33" },
@@ -966,15 +971,15 @@ ${exportData.map((d) => `${d.Date} | Revenue: ${d.Revenue} | Impressions: ${d.Im
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">This Month</span>
-                    <span className="text-xl font-bold text-green-600">${(0.003).toFixed(2)}</span>
+                    <span className="text-xl font-bold text-green-600">${thisMonthEarnings.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Last Month</span>
-                    <span className="text-lg font-semibold text-gray-700">$0.00</span>
+                    <span className="text-lg font-semibold text-gray-700">${lastMonthEarnings.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Growth Rate</span>
-                    <span className="text-sm font-medium text-green-600">0%</span>
+                    <span className="text-sm font-medium text-green-600">{growthRate}%</span>
                   </div>
                 </div>
               </Card>
@@ -1218,13 +1223,13 @@ ${exportData.map((d) => `${d.Date} | Revenue: ${d.Revenue} | Impressions: ${d.Im
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <StatsCard title="TODAY" value={`$${todayTotals.revenue.toFixed(2)}`} />
         <StatsCard title="THIS MONTH" value={`$${thisMonthEarnings.toFixed(3)}`} />
-        <StatsCard title="LAST MONTH" value="$0.00" />
+        <StatsCard title="LAST MONTH" value={`$${lastMonthEarnings.toFixed(2)}`} />
         <StatsCard
           title="THIS MONTH FORECAST"
-          value="$0.00"
+          value={`$${thisMonthForecast.toFixed(2)}`}
           badge={{
-            text: "0%",
-            color: "bg-gray-500",
+            text: `${forecastGrowth}%`,
+            color: "bg-green-500",
           }}
         />
         <StatsCard title="LAST 6 MONTHS" value={`$${totalEarnings.toFixed(3)}`} />
@@ -1658,6 +1663,12 @@ ${exportData.map((d) => `${d.Date} | Revenue: ${d.Revenue} | Impressions: ${d.Im
             </table>
           </div>
         </Card>
+      </div>
+
+      {/* Withdrawal History Section */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium">Withdrawal History</h3>
+        <WithdrawalHistory />
       </div>
     </div>
   )
