@@ -60,7 +60,7 @@ INVOICE DATE: ${withdrawal.date}
 STATUS: ${withdrawal.status}
 
 BILLED TO:
-Account Holder: Abdul Rehman
+Account Holder: Shahid Usman
 Email: ${withdrawal.account}
 Payment Method: ${withdrawal.method}
 Account Status: Verified
@@ -128,7 +128,7 @@ This invoice is digitally signed and verified.
       from: "Publisher Payments <payments@exoclick.com>",
       body: {
         header: "Withdrawal Invoice",
-        greeting: "Hello Abdul Rehman,",
+        greeting: "Hello Shahid Usman,",
         messages: [
           "Your withdrawal has been processed successfully.",
           "Please find your invoice details attached.",
@@ -226,7 +226,7 @@ This invoice is digitally signed and verified.
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <div className={`text-xs ${textSecondary} uppercase tracking-wide mb-1.5`}>Account Holder</div>
-                  <div className={`font-semibold ${textPrimary}`}>Abdul Rehman</div>
+                  <div className={`font-semibold ${textPrimary}`}>Shahid Usman</div>
                 </div>
                 <div>
                   <div className={`text-xs ${textSecondary} uppercase tracking-wide mb-1.5`}>Email</div>
