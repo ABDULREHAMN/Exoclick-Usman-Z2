@@ -138,7 +138,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
   const availableBalance = 591.83
   const pendingBalance = 145.44
   const totalEarnings = 1182.05
-  const totalPayments = 590.22
+  const totalPayments = 0
   const thisMonthEarnings = 1162.05
   const nextWithdrawalDate = "2026-06-02"
 
