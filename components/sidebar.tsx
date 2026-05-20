@@ -49,7 +49,7 @@ export function Sidebar({ isOpen = true }: SidebarProps) {
       <div
         style={{ zIndex: 1000 }}
         className={cn(
-          "bg-white text-gray-900 flex flex-col transition-all border-r border-gray-200",
+          "bg-[#1E2A38] text-white flex flex-col transition-all border-r border-[#2b3b4d]",
           "hidden lg:flex lg:relative",
           isCollapsed ? "lg:w-16" : "lg:w-48",
           "md:flex md:relative",
@@ -68,7 +68,7 @@ export function Sidebar({ isOpen = true }: SidebarProps) {
               e.stopPropagation()
               handleToggleCollapse()
             }}
-            className="hidden lg:flex items-center justify-center w-6 h-6 rounded hover:bg-gray-100 transition-colors cursor-pointer"
+            className="hidden lg:flex items-center justify-center w-6 h-6 rounded hover:bg-[#2b3b4d] transition-colors cursor-pointer"
             aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             type="button"
           >
@@ -81,7 +81,7 @@ export function Sidebar({ isOpen = true }: SidebarProps) {
               key={item.id}
               href={item.route}
               className={cn(
-                "flex items-center w-full px-4 py-3 text-sm hover:bg-gray-100 transition-colors",
+                "flex items-center w-full px-4 py-3 text-sm hover:bg-[#2b3b4d] transition-colors",
                 isActive(item.route) && "bg-green-500 text-white",
               )}
             >
@@ -89,7 +89,7 @@ export function Sidebar({ isOpen = true }: SidebarProps) {
                 className={cn(
                   "w-8 h-8 rounded flex items-center justify-center",
                   isCollapsed ? "" : "mr-3",
-                  isActive(item.route) ? "bg-white text-green-500" : "bg-gray-100 text-gray-600",
+                  isActive(item.route) ? "bg-white text-green-500" : "bg-[#2b3b4d] text-gray-400",
                 )}
               >
                 <item.icon size={18} />
