@@ -1,11 +1,12 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import { setAuthStatus } from "@/lib/auth"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -16,36 +17,113 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [usernameFocused, setUsernameFocused] = useState(false)
   const [passwordFocused, setPasswordFocused] = useState(false)
+  const [isLocked, setIsLocked] = useState(false)
+  const [lockTimeRemaining, setLockTimeRemaining] = useState(0)
+
+  const CORRECT_USERNAME = "zahidg7899"
+  const CORRECT_PASSWORD = "Zahid.567@"
+  const MAX_ATTEMPTS = 3
+  const LOCK_DURATION = 15 * 60 * 1000 // 15 minutes in milliseconds
+
+  useEffect(() => {
+    // Check if login is locked
+    const lockData = localStorage.getItem("loginLock")
+    if (lockData) {
+      try {
+        const { lockTime, attempts } = JSON.parse(lockData)
+        const now = Date.now()
+        const timeElapsed = now - lockTime
+        const timeRemaining = LOCK_DURATION - timeElapsed
+
+        if (timeRemaining > 0) {
+          setIsLocked(true)
+          setLockTimeRemaining(Math.ceil(timeRemaining / 1000))
+        } else {
+          // Lock expired, reset attempts
+          localStorage.removeItem("loginLock")
+          setIsLocked(false)
+        }
+      } catch (error) {
+        // Invalid JSON in lockData, clear it
+        localStorage.removeItem("loginLock")
+        setIsLocked(false)
+      }
+    }
+  }, [])
+
+  // Update remaining time every second
+  useEffect(() => {
+    if (!isLocked) return
+
+    const interval = setInterval(() => {
+      const lockData = localStorage.getItem("loginLock")
+      if (lockData) {
+        const { lockTime } = JSON.parse(lockData)
+        const now = Date.now()
+        const timeElapsed = now - lockTime
+        const timeRemaining = LOCK_DURATION - timeElapsed
+
+        if (timeRemaining <= 0) {
+          localStorage.removeItem("loginLock")
+          setIsLocked(false)
+          setError("")
+        } else {
+          setLockTimeRemaining(Math.ceil(timeRemaining / 1000))
+        }
+      }
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [isLocked])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
     setIsLoading(true)
 
-    if (username === "rajausman002" && password === "Raja@usman07") {
-      // Check if account is approved
-      const signupData = localStorage.getItem("signupData")
-      if (signupData) {
-        const userData = JSON.parse(signupData)
-        const signupTime = userData.signupTime
-        const currentTime = Date.now()
-        const hoursPassed = (currentTime - signupTime) / (1000 * 60 * 60)
+    // Check if account is locked
+    if (isLocked) {
+      setError(`Too many failed attempts. Please try again later.`)
+      setIsLoading(false)
+      return
+    }
 
-        if (hoursPassed < 24) {
-          setError("Your account is under review. Please wait for approval.")
-          setIsLoading(false)
-          return
-        }
-      }
-
-      // Success - redirect to dashboard
-      localStorage.setItem("isLoggedIn", "true")
-      localStorage.setItem("username", username)
+    if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
+      // Success - clear any lock data and redirect to dashboard
+      localStorage.removeItem("loginLock")
+      setAuthStatus(true, username)
       setTimeout(() => {
         router.push("/dashboard")
       }, 500)
     } else {
-      setError("Invalid username or password")
+      // Failed attempt - increment counter
+      let loginAttempts = 1
+      const lockData = localStorage.getItem("loginLock")
+
+      if (lockData) {
+        const data = JSON.parse(lockData)
+        loginAttempts = data.attempts + 1
+      }
+
+      if (loginAttempts >= MAX_ATTEMPTS) {
+        // Lock the account
+        const lockInfo = {
+          lockTime: Date.now(),
+          attempts: loginAttempts,
+        }
+        localStorage.setItem("loginLock", JSON.stringify(lockInfo))
+        setIsLocked(true)
+        setLockTimeRemaining(Math.ceil(LOCK_DURATION / 1000))
+        setError("Too many failed attempts. Please try again later.")
+      } else {
+        setError(`Invalid username or password (${MAX_ATTEMPTS - loginAttempts} attempt${MAX_ATTEMPTS - loginAttempts !== 1 ? "s" : ""} remaining)`)
+        const lockInfo = {
+          lockTime: Date.now(),
+          attempts: loginAttempts,
+        }
+        localStorage.setItem("loginLock", JSON.stringify(lockInfo))
+      }
+
       setIsLoading(false)
     }
   }
@@ -71,7 +149,8 @@ export default function LoginPage() {
                   onChange={(e) => setUsername(e.target.value)}
                   onFocus={() => setUsernameFocused(true)}
                   onBlur={() => setUsernameFocused(false)}
-                  className="w-full px-0 py-2 bg-transparent border-0 border-b-2 border-gray-300 focus:border-[#0088cc] focus:outline-none text-gray-700 placeholder:text-gray-400 transition-all"
+                  disabled={isLocked}
+                  className="w-full px-0 py-2 bg-transparent border-0 border-b-2 border-gray-300 focus:border-[#0088cc] focus:outline-none text-gray-700 placeholder:text-gray-400 transition-all disabled:opacity-50"
                   style={{
                     placeholderOpacity: usernameFocused ? 0.2 : 1,
                   }}
@@ -98,7 +177,8 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   onFocus={() => setPasswordFocused(true)}
                   onBlur={() => setPasswordFocused(false)}
-                  className="w-full px-0 py-2 pr-10 bg-transparent border-0 border-b-2 border-gray-300 focus:border-[#0088cc] focus:outline-none text-gray-700 placeholder:text-gray-400 transition-all"
+                  disabled={isLocked}
+                  className="w-full px-0 py-2 pr-10 bg-transparent border-0 border-b-2 border-gray-300 focus:border-[#0088cc] focus:outline-none text-gray-700 placeholder:text-gray-400 transition-all disabled:opacity-50"
                   required
                 />
                 <div
@@ -112,7 +192,8 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  disabled={isLocked}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 disabled:opacity-50"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -120,9 +201,16 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <div className="flex items-center gap-2 text-red-600 text-sm">
+              <div className={`flex items-center gap-2 text-sm ${isLocked ? "text-red-600" : "text-red-600"}`}>
                 <span>⚠</span>
-                {error}
+                <div>
+                  {error}
+                  {isLocked && lockTimeRemaining > 0 && (
+                    <div className="mt-1">
+                      {Math.floor(lockTimeRemaining / 60)}:{String(lockTimeRemaining % 60).padStart(2, "0")} remaining
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 
@@ -137,10 +225,10 @@ export default function LoginPage() {
 
             <Button
               type="submit"
-              disabled={isLoading}
-              className="w-full bg-[#0088cc] hover:bg-[#0077b3] text-white font-bold py-3 rounded text-sm uppercase tracking-wide"
+              disabled={isLoading || isLocked}
+              className="w-full bg-[#0088cc] hover:bg-[#0077b3] text-white font-bold py-3 rounded text-sm uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? "LOGGING IN..." : "LOG IN"}
+              {isLoading ? "LOGGING IN..." : isLocked ? "ACCOUNT LOCKED" : "LOG IN"}
             </Button>
           </form>
 

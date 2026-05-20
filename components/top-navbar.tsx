@@ -6,6 +6,7 @@ import { ChevronDown, Globe, Search, User, Settings, LogOut, Bell, Menu } from "
 import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { clearAuth } from "@/lib/auth"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -80,8 +81,7 @@ export function TopNavbar({ onNavigate }: TopNavbarProps) {
   }
 
   const handleLogout = () => {
-    localStorage.clear()
-    sessionStorage.clear()
+    clearAuth()
     window.location.href = "/login"
   }
 
