@@ -42,8 +42,6 @@ export function WithdrawalHistory() {
     },
   ]
 
-  const totalWithdrawn = withdrawals.reduce((sum, withdrawal) => sum + withdrawal.amount, 0)
-
   return (
     <Card className="p-4">
       <h2 className="text-lg font-medium mb-4">Withdrawal History</h2>
@@ -72,9 +70,6 @@ export function WithdrawalHistory() {
             ))}
           </tbody>
         </table>
-      </div>
-      <div className="mt-4 text-right text-lg font-semibold">
-        Total Withdrawn: <span className="text-green-600">${totalWithdrawn.toFixed(2)}</span>
       </div>
     </Card>
   )
