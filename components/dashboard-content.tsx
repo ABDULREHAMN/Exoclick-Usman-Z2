@@ -19,7 +19,6 @@ import {
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { WithdrawalHistory } from "@/components/withdrawal-history"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -112,11 +111,13 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     { date: "May 17, 2026", impressions: 12548, clicks: 343, revenue: 83.22, ctr: "2.73%", ecpm: "80.66" },
     { date: "May 18, 2026", impressions: 12547, clicks: 344, revenue: 83.55, ctr: "2.74%", ecpm: "80.88" },
     { date: "May 19, 2026", impressions: 12545, clicks: 344, revenue: 83.88, ctr: "2.74%", ecpm: "81.00" },
-    { date: "May 20, 2026", impressions: 4532, clicks: 197, revenue: 34.33, ctr: "4.35%", ecpm: "85.22" },
+    { date: "May 20, 2026", impressions: 12270, clicks: 381, revenue: 81.00, ctr: "3.10%", ecpm: "85.00" },
+    { date: "May 21, 2026", impressions: 4532, clicks: 185, revenue: 35.00, ctr: "4.08%", ecpm: "85.00" },
   ]
 
   const recentActivityData = [
-    { date: "May 20, 2026", impressions: 4532, clicks: 197, revenue: 34.33, ctr: "4.35%", ecpm: "85.22" },
+    { date: "May 21, 2026", impressions: 4532, clicks: 185, revenue: 35.00, ctr: "4.08%", ecpm: "85.00" },
+    { date: "May 20, 2026", impressions: 12270, clicks: 381, revenue: 81.00, ctr: "3.10%", ecpm: "85.00" },
     { date: "May 19, 2026", impressions: 12545, clicks: 344, revenue: 83.88, ctr: "2.74%", ecpm: "81.00" },
     { date: "May 18, 2026", impressions: 12547, clicks: 344, revenue: 83.55, ctr: "2.74%", ecpm: "80.88" },
     { date: "May 17, 2026", impressions: 12548, clicks: 343, revenue: 83.22, ctr: "2.73%", ecpm: "80.66" },
@@ -125,30 +126,29 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     { date: "May 14, 2026", impressions: 12551, clicks: 341, revenue: 82.33, ctr: "2.71%", ecpm: "80.00" },
     { date: "May 13, 2026", impressions: 12543, clicks: 345, revenue: 79.11, ctr: "2.75%", ecpm: "81.22" },
     { date: "May 12, 2026", impressions: 12544, clicks: 345, revenue: 77.88, ctr: "2.75%", ecpm: "78.11" },
-    { date: "May 11, 2026", impressions: 12545, clicks: 344, revenue: 76.55, ctr: "2.74%", ecpm: "75.66" },
   ]
 
   const latestActivity = {
-    date: "May 20, 2026",
-    revenue: 34.33,
+    date: "May 21, 2026",
+    revenue: 35.00,
     impressions: 4532,
-    clicks: 197,
-    ctr: "4.35%",
-    ecpm: "85.22",
+    clicks: 185,
+    ctr: "4.08%",
+    ecpm: "85.00",
   }
 
-  const todayRevenue = 34.33
+  const todayRevenue = 35.00
   const todayImpressions = 4532
-  const todayClicks = 197
-  const todayCTR = "4.35"
-  const todayECPM = "85.22"
+  const todayClicks = 185
+  const todayCTR = "4.08"
+  const todayECPM = "85.00"
 
   const hourlyData = []
 
   const todayTotals = {
     impressions: 4532,
-    clicks: 197,
-    revenue: 34.33,
+    clicks: 185,
+    revenue: 35.00,
   }
 
   // This ensures all data aggregates to locked totals: $4,819.23 revenue, 32,687 clicks, 567,531 impressions
@@ -1663,12 +1663,6 @@ ${exportData.map((d) => `${d.Date} | Revenue: ${d.Revenue} | Impressions: ${d.Im
             </table>
           </div>
         </Card>
-      </div>
-
-      {/* Withdrawal History Section */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-medium">Withdrawal History</h3>
-        <WithdrawalHistory />
       </div>
     </div>
   )
