@@ -19,7 +19,6 @@ import {
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { WithdrawalHistory } from "@/components/withdrawal-history"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -1664,12 +1663,6 @@ ${exportData.map((d) => `${d.Date} | Revenue: ${d.Revenue} | Impressions: ${d.Im
             </table>
           </div>
         </Card>
-      </div>
-
-      {/* Withdrawal History Section */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-medium">Withdrawal History</h3>
-        <WithdrawalHistory />
       </div>
     </div>
   )
