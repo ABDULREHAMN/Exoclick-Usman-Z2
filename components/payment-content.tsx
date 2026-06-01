@@ -116,8 +116,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
   const totalEarnings = 2161.14
   const totalPayments = 0
   const thisMonthEarnings = 37.21
-  // Manual withdrawal mode - next withdrawal date disabled
-  const nextWithdrawalDate = null
+  const nextWithdrawalDate = "02-06-2026"
 
   const paymentEntries = []
 
@@ -512,6 +511,10 @@ Generated on: ${new Date().toLocaleDateString()}
                   <div>
                     <div className="text-sm text-gray-600">Pending</div>
                     <div className="text-2xl font-bold text-yellow-600">${pendingBalance.toFixed(2)}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-600">Next Withdrawal</div>
+                    <div className="text-2xl font-bold text-blue-600">{nextWithdrawalDate}</div>
                   </div>
                 </div>
               </Card>
