@@ -66,7 +66,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
   const [withdrawalHistory, setWithdrawalHistory] = useState<WithdrawalDetails[]>([
     {
       id: "w-001",
-      date: "25 May 2026",
+      date: "18 May 2026",
       method: "Payoneer",
       amount: "$590.22",
       status: "Pending",
