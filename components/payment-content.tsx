@@ -63,7 +63,17 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
   const [selectedPaymentEntry, setSelectedPaymentEntry] = useState<any>(null)
   const { kycStatus, openKycPromptModal } = useKyc()
 
-  const [withdrawalHistory, setWithdrawalHistory] = useState<WithdrawalDetails[]>([])
+  const [withdrawalHistory, setWithdrawalHistory] = useState<WithdrawalDetails[]>([
+    {
+      id: "w-001",
+      date: "16 May 2026",
+      method: "Payoneer",
+      amount: "$590.22",
+      status: "Pending",
+      email: "abdul.rehman.soashraf@gmail.com",
+      verified: true,
+    },
+  ])
 
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethodData[]>([
     {
@@ -97,50 +107,16 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
   })
 
   useEffect(() => {
-    const checkPendingWithdrawals = () => {
-      const now = new Date()
-      const updatedHistory = withdrawalHistory.map((withdrawal) => {
-        if (withdrawal.status === "Pending" && withdrawal.method === "Payoneer") {
-          const withdrawalDate = new Date(withdrawal.date)
-          const daysPassed = Math.floor((now.getTime() - withdrawalDate.getTime()) / (1000 * 60 * 60 * 24))
-
-          if (daysPassed >= 8) {
-            // Auto-complete after 8 days
-            const completedDate = new Date(withdrawalDate)
-            completedDate.setDate(completedDate.getDate() + 8)
-
-            return {
-              ...withdrawal,
-              status: "Completed" as const,
-              completedDate: completedDate.toISOString().split("T")[0],
-            }
-          }
-        }
-        return withdrawal
-      })
-
-      // Check if any status changed
-      const hasChanges = updatedHistory.some((w, i) => w.status !== withdrawalHistory[i].status)
-      if (hasChanges) {
-        setWithdrawalHistory(updatedHistory)
-        // System notification (no UI change, just console log)
-        console.log("[v0] Your Payoneer withdrawal has been completed successfully.")
-      }
-    }
-
-    // Check on mount and every hour
-    checkPendingWithdrawals()
-    const interval = setInterval(checkPendingWithdrawals, 60 * 60 * 1000)
-
-    return () => clearInterval(interval)
+    // Manual withdrawal mode only - no automatic processing
+    // All withdrawals must be manually created and approved by admin
   }, [withdrawalHistory])
 
-  const availableBalance = 591.83
+  const availableBalance = 1590.92
   const pendingBalance = 590.22
-  const totalEarnings = 1182.05
+  const totalEarnings = 2161.14
   const totalPayments = 0
-  const thisMonthEarnings = 1162.05
-  const nextWithdrawalDate = "2026-06-02"
+  const thisMonthEarnings = 37.21
+  const nextWithdrawalDate = "02-06-2026"
 
   const paymentEntries = []
 
@@ -162,7 +138,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
     if (pendingBalance > 0) {
       setShowError(true)
       setErrorMessage(
-        "You have a pending withdrawal scheduled for January 12th, 2026. Please wait for it to be processed before requesting another withdrawal.",
+        "You have a pending withdrawal. Manual withdrawals are processed by our team. Please wait for approval.",
       )
       return
     }
@@ -533,13 +509,12 @@ Generated on: ${new Date().toLocaleDateString()}
                     <div className="text-2xl font-bold text-gray-800">${totalPayments.toFixed(2)}</div>
                   </div>
                   <div>
-                    <div className="text-sm text-gray-600">Next Withdrawal</div>
-                    <div className="text-lg font-semibold text-gray-800">{nextWithdrawalDate}</div>
-                  </div>
-                  <div>
                     <div className="text-sm text-gray-600">Pending</div>
                     <div className="text-2xl font-bold text-yellow-600">${pendingBalance.toFixed(2)}</div>
-                    <div className="text-xs text-gray-500">{nextWithdrawalDate}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-600">Next Withdrawal</div>
+                    <div className="text-2xl font-bold text-blue-600">{nextWithdrawalDate}</div>
                   </div>
                 </div>
               </Card>
