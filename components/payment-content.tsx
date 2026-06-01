@@ -139,7 +139,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
     if (pendingBalance > 0) {
       setShowError(true)
       setErrorMessage(
-        "You have a pending withdrawal scheduled for January 12th, 2026. Please wait for it to be processed before requesting another withdrawal.",
+        "You have a pending withdrawal. Manual withdrawals are processed by our team. Please wait for approval.",
       )
       return
     }
@@ -510,13 +510,8 @@ Generated on: ${new Date().toLocaleDateString()}
                     <div className="text-2xl font-bold text-gray-800">${totalPayments.toFixed(2)}</div>
                   </div>
                   <div>
-                    <div className="text-sm text-gray-600">Next Withdrawal</div>
-                    <div className="text-lg font-semibold text-gray-800">{nextWithdrawalDate ? nextWithdrawalDate : "Manual Mode"}</div>
-                  </div>
-                  <div>
                     <div className="text-sm text-gray-600">Pending</div>
                     <div className="text-2xl font-bold text-yellow-600">${pendingBalance.toFixed(2)}</div>
-                    {nextWithdrawalDate && <div className="text-xs text-gray-500">{nextWithdrawalDate}</div>}
                   </div>
                 </div>
               </Card>
