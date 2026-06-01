@@ -73,33 +73,6 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
       email: "abdul.rehman.soashraf@gmail.com",
       verified: true,
     },
-    {
-      id: "w-002",
-      date: "01 June 2026",
-      method: "Crypto (BEP20)",
-      amount: "$550.00",
-      status: "Confirmed",
-      address: "0xb9cE5241...4202706B",
-      verified: true,
-    },
-    {
-      id: "w-003",
-      date: "13 June 2026",
-      method: "PayPal",
-      amount: "$150.00",
-      status: "Confirmed",
-      email: "rohanjanean56@gmail.com",
-      verified: true,
-    },
-    {
-      id: "w-004",
-      date: "22 June 2026",
-      method: "Daily Earnings",
-      amount: "$358.33",
-      status: "Confirmed",
-      address: "System Generated",
-      verified: true,
-    },
   ])
 
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethodData[]>([
