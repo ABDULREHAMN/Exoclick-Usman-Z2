@@ -66,7 +66,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
   const [withdrawalHistory, setWithdrawalHistory] = useState<WithdrawalDetails[]>([
     {
       id: "w-001",
-      date: "18 May 2026",
+      date: "16 May 2026",
       method: "Payoneer",
       amount: "$590.22",
       status: "Pending",
@@ -107,42 +107,8 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
   })
 
   useEffect(() => {
-    const checkPendingWithdrawals = () => {
-      const now = new Date()
-      const updatedHistory = withdrawalHistory.map((withdrawal) => {
-        if (withdrawal.status === "Pending" && withdrawal.method === "Payoneer") {
-          const withdrawalDate = new Date(withdrawal.date)
-          const daysPassed = Math.floor((now.getTime() - withdrawalDate.getTime()) / (1000 * 60 * 60 * 24))
-
-          if (daysPassed >= 8) {
-            // Auto-complete after 8 days
-            const completedDate = new Date(withdrawalDate)
-            completedDate.setDate(completedDate.getDate() + 8)
-
-            return {
-              ...withdrawal,
-              status: "Completed" as const,
-              completedDate: completedDate.toISOString().split("T")[0],
-            }
-          }
-        }
-        return withdrawal
-      })
-
-      // Check if any status changed
-      const hasChanges = updatedHistory.some((w, i) => w.status !== withdrawalHistory[i].status)
-      if (hasChanges) {
-        setWithdrawalHistory(updatedHistory)
-        // System notification (no UI change, just console log)
-        console.log("[v0] Your Payoneer withdrawal has been completed successfully.")
-      }
-    }
-
-    // Check on mount and every hour
-    checkPendingWithdrawals()
-    const interval = setInterval(checkPendingWithdrawals, 60 * 60 * 1000)
-
-    return () => clearInterval(interval)
+    // Manual withdrawal mode only - no automatic processing
+    // All withdrawals must be manually created and approved by admin
   }, [withdrawalHistory])
 
   const availableBalance = 1590.92
@@ -150,7 +116,8 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
   const totalEarnings = 2161.14
   const totalPayments = 0
   const thisMonthEarnings = 37.21
-  const nextWithdrawalDate = "2026-06-02"
+  // Manual withdrawal mode - next withdrawal date disabled
+  const nextWithdrawalDate = null
 
   const paymentEntries = []
 
@@ -544,12 +511,12 @@ Generated on: ${new Date().toLocaleDateString()}
                   </div>
                   <div>
                     <div className="text-sm text-gray-600">Next Withdrawal</div>
-                    <div className="text-lg font-semibold text-gray-800">{nextWithdrawalDate}</div>
+                    <div className="text-lg font-semibold text-gray-800">{nextWithdrawalDate ? nextWithdrawalDate : "Manual Mode"}</div>
                   </div>
                   <div>
                     <div className="text-sm text-gray-600">Pending</div>
                     <div className="text-2xl font-bold text-yellow-600">${pendingBalance.toFixed(2)}</div>
-                    <div className="text-xs text-gray-500">{nextWithdrawalDate}</div>
+                    {nextWithdrawalDate && <div className="text-xs text-gray-500">{nextWithdrawalDate}</div>}
                   </div>
                 </div>
               </Card>
