@@ -86,7 +86,7 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
   const thisMonthForecast = 1673.33
   const growthRate = ((thisMonthEarnings - lastMonthEarnings) / lastMonthEarnings * 100).toFixed(1)
   const forecastGrowth = ((thisMonthForecast - thisMonthEarnings) / thisMonthEarnings * 100).toFixed(1)
-  const totalPayments = 0
+  const totalPayments = 590.22
   const totalEarnings = 2851.80
   const nextWithdrawalDate = "2026-06-02"
 
