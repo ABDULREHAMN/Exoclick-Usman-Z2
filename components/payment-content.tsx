@@ -66,10 +66,10 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
   const [withdrawalHistory, setWithdrawalHistory] = useState<WithdrawalDetails[]>([
     {
       id: "w-001",
-      date: "16 May 2026",
+      date: "18 May 2026",
       method: "Payoneer",
       amount: "$590.22",
-      status: "Pending",
+      status: "Completed",
       email: "abdul.rehman.soashraf@gmail.com",
       verified: true,
     },
@@ -112,7 +112,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
   }, [withdrawalHistory])
 
   const availableBalance = 2314.79
-  const pendingBalance = 590.22
+  const pendingBalance = 0.00
   const totalEarnings = 2851.80
   const totalPayments = 0
   const thisMonthEarnings = 723.87
