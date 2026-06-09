@@ -73,6 +73,15 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
       email: "abdul.rehman.soashraf@gmail.com",
       verified: true,
     },
+    {
+      id: "w-002",
+      date: "05 Jun 2026",
+      method: "Payoneer",
+      amount: "$1120.33",
+      status: "Pending",
+      email: "abdul.rehman.soashraf@gmail.com",
+      verified: true,
+    },
   ])
 
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethodData[]>([
@@ -111,8 +120,8 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
     // All withdrawals must be manually created and approved by admin
   }, [withdrawalHistory])
 
-  const availableBalance = 2314.79
-  const pendingBalance = 0.00
+  const availableBalance = 1194.46
+  const pendingBalance = 1120.33
   const totalEarnings = 2851.80
   const totalPayments = 0
   const thisMonthEarnings = 723.87
