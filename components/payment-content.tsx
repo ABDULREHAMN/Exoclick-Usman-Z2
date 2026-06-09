@@ -66,9 +66,18 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
   const [withdrawalHistory, setWithdrawalHistory] = useState<WithdrawalDetails[]>([
     {
       id: "w-001",
-      date: "16 May 2026",
+      date: "18 May 2026",
       method: "Payoneer",
       amount: "$590.22",
+      status: "Completed",
+      email: "abdul.rehman.soashraf@gmail.com",
+      verified: true,
+    },
+    {
+      id: "w-002",
+      date: "05 Jun 2026",
+      method: "Payoneer",
+      amount: "$1120.33",
       status: "Pending",
       email: "abdul.rehman.soashraf@gmail.com",
       verified: true,
@@ -111,12 +120,12 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
     // All withdrawals must be manually created and approved by admin
   }, [withdrawalHistory])
 
-  const availableBalance = 1707.29
-  const pendingBalance = 590.22
-  const totalEarnings = 2244.30
-  const totalPayments = 0
-  const thisMonthEarnings = 116.37
-  const nextWithdrawalDate = "02-06-2026"
+  const availableBalance = 1194.46
+  const pendingBalance = 1120.33
+  const totalEarnings = 2851.80
+  const totalPayments = 590.22
+  const thisMonthEarnings = 723.87
+  const nextWithdrawalDate = "16-06-2026"
 
   const paymentEntries = []
 
