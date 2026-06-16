@@ -81,13 +81,13 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
 
   const availableBalance = 1194.46
   const pendingBalance = 1120.33
-  const thisMonthEarnings = 1241.05
+  const thisMonthEarnings = 1276.36
   const lastMonthEarnings = 2141.14
   const thisMonthForecast = 1673.33
   const growthRate = ((thisMonthEarnings - lastMonthEarnings) / lastMonthEarnings * 100).toFixed(1)
   const forecastGrowth = ((thisMonthForecast - thisMonthEarnings) / thisMonthEarnings * 100).toFixed(1)
   const totalPayments = 590.22
-  const totalEarnings = 3368.98
+  const totalEarnings = 3404.29
   const nextWithdrawalDate = "2026-06-16"
 
   const allReportData = [
@@ -124,11 +124,13 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     { date: "Jun 12, 2026", impressions: 12349, clicks: 341, revenue: 83.07, ctr: "2.76%", ecpm: "83.18" },
     { date: "Jun 13, 2026", impressions: 12123, clicks: 340, revenue: 80.97, ctr: "2.80%", ecpm: "81.98" },
     { date: "Jun 14, 2026", impressions: 12345, clicks: 345, revenue: 82.59, ctr: "2.79%", ecpm: "81.87" },
-    { date: "Jun 15, 2026", impressions: 4565, clicks: 198, revenue: 34.56, ctr: "4.34%", ecpm: "82.66" },
+    { date: "Jun 15, 2026", impressions: 12123, clicks: 338, revenue: 80.99, ctr: "2.79%", ecpm: "80.37" },
+    { date: "Jun 16, 2026", impressions: 5098, clicks: 199, revenue: 35.31, ctr: "3.90%", ecpm: "81.55" },
   ]
 
   const recentActivityData = [
-    { date: "Jun 15, 2026", impressions: 4565, clicks: 198, revenue: 34.56, ctr: "4.34%", ecpm: "82.66" },
+    { date: "Jun 16, 2026", impressions: 5098, clicks: 199, revenue: 35.31, ctr: "3.90%", ecpm: "81.55" },
+    { date: "Jun 15, 2026", impressions: 12123, clicks: 338, revenue: 80.99, ctr: "2.79%", ecpm: "80.37" },
     { date: "Jun 14, 2026", impressions: 12345, clicks: 345, revenue: 82.59, ctr: "2.79%", ecpm: "81.87" },
     { date: "Jun 13, 2026", impressions: 12123, clicks: 340, revenue: 80.97, ctr: "2.80%", ecpm: "81.98" },
     { date: "Jun 12, 2026", impressions: 12349, clicks: 341, revenue: 83.07, ctr: "2.76%", ecpm: "83.18" },
@@ -137,30 +139,29 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     { date: "Jun 09, 2026", impressions: 12342, clicks: 346, revenue: 80.72, ctr: "2.80%", ecpm: "81.87" },
     { date: "Jun 08, 2026", impressions: 12543, clicks: 351, revenue: 83.98, ctr: "2.80%", ecpm: "84.22" },
     { date: "Jun 07, 2026", impressions: 12512, clicks: 350, revenue: 83.55, ctr: "2.80%", ecpm: "83.99" },
-    { date: "Jun 06, 2026", impressions: 12488, clicks: 348, revenue: 83.12, ctr: "2.79%", ecpm: "83.74" },
   ]
 
   const latestActivity = {
-    date: "Jun 15, 2026",
-    revenue: 34.56,
-    impressions: 4565,
-    clicks: 198,
-    ctr: "4.34%",
-    ecpm: "82.66",
+    date: "Jun 16, 2026",
+    revenue: 35.31,
+    impressions: 5098,
+    clicks: 199,
+    ctr: "3.90%",
+    ecpm: "81.55",
   }
 
-  const todayRevenue = 34.56
-  const todayImpressions = 4565
-  const todayClicks = 198
-  const todayCTR = "4.34"
-  const todayECPM = "82.66"
+  const todayRevenue = 35.31
+  const todayImpressions = 5098
+  const todayClicks = 199
+  const todayCTR = "3.90"
+  const todayECPM = "81.55"
 
   const hourlyData = []
 
   const todayTotals = {
-    impressions: 4565,
-    clicks: 198,
-    revenue: 34.56,
+    impressions: 5098,
+    clicks: 199,
+    revenue: 35.31,
   }
 
   // This ensures all data aggregates to locked totals: $4,819.23 revenue, 32,687 clicks, 567,531 impressions
@@ -668,7 +669,7 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
   }, [filteredReportData])
 
   // Display totals - use calculated when filters are active, otherwise use fixed totals
-  const displayTotalRevenue = dashboardDateRange !== null ? calculatedTotalRevenue : 3368.98 // Fixed total earnings
+  const displayTotalRevenue = dashboardDateRange !== null ? calculatedTotalRevenue : 3404.29 // Fixed total earnings
   const displayTotalClicks = dashboardDateRange !== null ? calculatedTotalClicks : 9876 // Total clicks
   const displayTotalImpressions = dashboardDateRange !== null ? calculatedTotalImpressions : 354237 // Total impressions
 
