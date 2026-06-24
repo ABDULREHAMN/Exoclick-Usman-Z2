@@ -13,7 +13,7 @@ export function WithdrawalHistory() {
       method: "Payoneer",
       amount: 590.22,
       status: "scheduled",
-      details: "abdul.rehman.soashraf@gmail.com",
+      details: "safdarhussainsonazir@gmail.com",
       isVerified: true,
     },
     {

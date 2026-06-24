@@ -16,6 +16,7 @@ import {
   Download,
   TrendingUp,
 } from "lucide-react"
+import { ensureTodayEntry, getTodayLatestActivity, getCurrentDateFormatted } from "@/lib/auto-daily-placeholder"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
@@ -134,9 +135,28 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     { date: "Jun 22, 2026", impressions: 12765, clicks: 347, revenue: 83.99, ctr: "2.72%", ecpm: "83.05" },
     { date: "Jun 23, 2026", impressions: 12765, clicks: 347, revenue: 83.99, ctr: "2.72%", ecpm: "83.05" },
     { date: "Jun 24, 2026", impressions: 12322, clicks: 349, revenue: 81.89, ctr: "2.83%", ecpm: "82.88" },
+    // Auto-daily placeholder for today will be added below
   ]
 
-  const recentActivityData = [
+  // Add today's placeholder entry if it doesn't exist
+  const todayDateFormatted = getCurrentDateFormatted()
+  const allReportDataWithToday = allReportData.some((d) => d.date === todayDateFormatted)
+    ? allReportData
+    : [
+        ...allReportData,
+        {
+          date: todayDateFormatted,
+          impressions: 0,
+          clicks: 0,
+          revenue: 0,
+          ctr: "0.00%",
+          ecpm: "$0.00",
+        },
+      ]
+
+  const finalAllReportData = allReportDataWithToday
+
+  const baseRecentActivityData = [
     { date: "Jun 24, 2026", impressions: 12322, clicks: 349, revenue: 81.89, ctr: "2.83%", ecpm: "82.88" },
     { date: "Jun 23, 2026", impressions: 12765, clicks: 347, revenue: 83.99, ctr: "2.72%", ecpm: "83.05" },
     { date: "Jun 22, 2026", impressions: 12765, clicks: 347, revenue: 83.99, ctr: "2.72%", ecpm: "83.05" },
@@ -149,27 +169,23 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     { date: "Jun 15, 2026", impressions: 12123, clicks: 338, revenue: 80.99, ctr: "2.79%", ecpm: "80.37" },
   ]
 
-  const latestActivity = {
-    date: "Jun 24, 2026",
-    revenue: 81.89,
-    impressions: 12322,
-    clicks: 349,
-    ctr: "2.83%",
-    ecpm: "82.88",
-  }
+  // Ensure today's entry exists with auto-daily placeholder
+  const recentActivityData = ensureTodayEntry(baseRecentActivityData)
 
-  const todayRevenue = 81.89
-  const todayImpressions = 12322
-  const todayClicks = 349
-  const todayCTR = "2.83"
-  const todayECPM = "82.88"
+  const latestActivity = getTodayLatestActivity(recentActivityData)
+
+  const todayRevenue = latestActivity.revenue
+  const todayImpressions = latestActivity.impressions
+  const todayClicks = latestActivity.clicks
+  const todayCTR = latestActivity.ctr.replace("%", "")
+  const todayECPM = latestActivity.ecpm.startsWith("$") ? latestActivity.ecpm : `$${latestActivity.ecpm}`
 
   const hourlyData = []
 
   const todayTotals = {
-    impressions: 12322,
-    clicks: 349,
-    revenue: 81.89,
+    impressions: latestActivity.impressions,
+    clicks: latestActivity.clicks,
+    revenue: latestActivity.revenue,
   }
 
   // This ensures all data aggregates to locked totals: $4,819.23 revenue, 32,687 clicks, 567,531 impressions
@@ -225,7 +241,7 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
   ]
 
   // Distribute each day's data into hourly breakdown
-  const distributeDataByHour = (dailyData: typeof allReportData) => {
+  const distributeDataByHour = (dailyData: typeof finalAllReportData) => {
     const hourlyData: Array<{
       date: string
       hour: number
@@ -561,7 +577,7 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     }
   }
 
-  const applyDashboardFilters = (data: typeof allReportData) => {
+  const applyDashboardFilters = (data: typeof finalAllReportData) => {
     let filtered = [...data]
 
     // Apply date range filter from dashboard filters
@@ -581,14 +597,14 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     return filtered
   }
 
-  const filteredReportData = applyDashboardFilters(allReportData)
+  const filteredReportData = applyDashboardFilters(finalAllReportData)
 
   const getFilteredData = () => {
     // This function is no longer directly used for chart data, but kept for potential future use or specific components.
     // It returns data based on the dateRange state (which is now dashboardDateRange).
-    if (!dashboardDateRange) return allReportData
+    if (!dashboardDateRange) return finalAllReportData
 
-    const sortedData = [...allReportData].sort((a, b) => {
+    const sortedData = [...finalAllReportData].sort((a, b) => {
       const dateA = new Date(a.date)
       const dateB = new Date(b.date)
       return dateB.getTime() - dateA.getTime()
@@ -682,7 +698,7 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
   const displayTotalImpressions = dashboardDateRange !== null ? calculatedTotalImpressions : 354237 // Total impressions
 
   const calculateWeekOverWeekGrowth = () => {
-    const dataToCalculate = dashboardDateRange ? filteredReportData : allReportData
+    const dataToCalculate = dashboardDateRange ? filteredReportData : finalAllReportData
     const relevantData = [...dataToCalculate].sort((a, b) => {
       const dateA = new Date(a.date)
       const dateB = new Date(b.date)

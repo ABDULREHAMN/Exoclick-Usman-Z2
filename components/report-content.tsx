@@ -4,6 +4,7 @@ import { Download, Filter, RefreshCw, BarChart2 } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { getCurrentDateFormatted } from "@/lib/auto-daily-placeholder"
 
 const reportData = {
   "Last 7 Days": {
@@ -230,6 +231,37 @@ const statisticsTotals = {
   ctr: 2.65,
 }
 
+// Add today's placeholder entry to all report sections
+const todayDate = getCurrentDateFormatted()
+const todayPlaceholder = {
+  date: todayDate,
+  impressions: "0",
+  clicks: "0",
+  ctr: "0.00%",
+  ecpm: "$0.00",
+  revenue: "$0.00",
+}
+
+const enhanceReportDataWithToday = (data: typeof reportData) => {
+  const enhanced = JSON.parse(JSON.stringify(data))
+
+  for (const period in enhanced) {
+    for (const country in enhanced[period]) {
+      for (const device in enhanced[period][country]) {
+        const deviceData = enhanced[period][country][device]
+        // Check if today's date already exists
+        if (!deviceData.some((entry: any) => entry.date === todayDate)) {
+          deviceData.unshift(todayPlaceholder)
+        }
+      }
+    }
+  }
+
+  return enhanced
+}
+
+const reportDataWithToday = enhanceReportDataWithToday(reportData)
+
 export function ReportContent() {
   const [showReport] = useState(true)
   const [selectedDateRange, setSelectedDateRange] = useState("Last 7 Days")
@@ -238,7 +270,7 @@ export function ReportContent() {
   const [selectedSite, setSelectedSite] = useState("All Sites")
   const [selectedCountry, setSelectedCountry] = useState("All Countries")
   const [selectedDevice, setSelectedDevice] = useState("All Devices")
-  const [currentReportData, setCurrentReportData] = useState(reportData["Last 7 Days"]["All Countries"]["All Devices"])
+  const [currentReportData, setCurrentReportData] = useState(reportDataWithToday["Last 7 Days"]["All Countries"]["All Devices"])
   const [isFiltered, setIsFiltered] = useState(false)
 
   const handleGenerateReport = () => {
@@ -250,7 +282,7 @@ export function ReportContent() {
   }
 
   const handleApplyFilters = () => {
-    const dateData = reportData[selectedDateRange as keyof typeof reportData]
+    const dateData = reportDataWithToday[selectedDateRange as keyof typeof reportDataWithToday]
     const countryData = dateData?.[selectedCountry as keyof typeof dateData]
     const deviceData = countryData?.[selectedDevice as keyof typeof countryData]
 
@@ -258,7 +290,7 @@ export function ReportContent() {
       setCurrentReportData(deviceData)
       setIsFiltered(true)
     } else {
-      setCurrentReportData(reportData["Last 7 Days"]["All Countries"]["All Devices"])
+      setCurrentReportData(reportDataWithToday["Last 7 Days"]["All Countries"]["All Devices"])
       setIsFiltered(false)
     }
   }
@@ -271,7 +303,7 @@ export function ReportContent() {
     setSelectedCountry("All Countries")
     setSelectedDevice("All Devices")
 
-    setCurrentReportData(reportData["Last 7 Days"]["All Countries"]["All Devices"])
+    setCurrentReportData(reportDataWithToday["Last 7 Days"]["All Countries"]["All Devices"])
     setIsFiltered(false)
   }
 

@@ -79,7 +79,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
       method: "Payoneer",
       amount: "$1120.33",
       status: "Pending",
-      email: "abdul.rehman.soashraf@gmail.com",
+      email: "safdarhussainsonazir@gmail.com",
       verified: true,
     },
     {
@@ -88,7 +88,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
       method: "Payoneer",
       amount: "$1280.33",
       status: "Pending",
-      email: "abdul.rehman.soashraf@gmail.com",
+      email: "safdarhussainsonazir@gmail.com",
       verified: true,
     },
   ])
@@ -97,8 +97,8 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
     {
       id: "pm-1",
       type: "payoneer",
-      accountHolderName: "Abdul Rehman",
-      email: "abdul.rehman.soashraf@gmail.com",
+      accountHolderName: "Safdar Hussain",
+      email: "safdarhussainsonazir@gmail.com",
       country: "Pakistan",
       currency: "USD",
       status: "Active",
