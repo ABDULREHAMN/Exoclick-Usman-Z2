@@ -129,7 +129,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
     // All withdrawals must be manually created and approved by admin
   }, [withdrawalHistory])
 
-  const availableBalance = 2105.16
+  const availableBalance = 734.16
   const pendingBalance = 2400.66
   const totalEarnings = 9310.21
   const totalPayments = 590.22
