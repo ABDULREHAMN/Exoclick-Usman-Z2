@@ -281,99 +281,75 @@ const FULL_CONVERSATION: ChatMessage[] = [
   // G4 - Withdrawal Processing Conversation
   {
     id: "g4-1",
-    text: "I've added my crypto wallet and submitted a new withdrawal request. Could you please check if everything looks okay?",
+    text: "I have added my crypto wallet successfully and submitted a new withdrawal request.",
     sender: "customer",
     timestamp: "10:06 AM",
   },
   {
     id: "g4-2",
-    text: "Thank you. I've checked your account. Your crypto wallet has been added successfully, and your new withdrawal request has been created. Everything looks good from our side.",
+    text: "Great! I can confirm your crypto wallet has been added successfully and your new withdrawal request has been created.",
     sender: "agent",
     timestamp: "10:07 AM",
   },
   {
     id: "g4-3",
-    text: "Can this withdrawal be completed today? I've already waited a long time for my previous withdrawals.",
+    text: "Can this withdrawal be completed today?",
     sender: "customer",
     timestamp: "10:08 AM",
   },
   {
     id: "g4-4",
-    text: "I understand your concern. However, we can't release withdrawals immediately. Every withdrawal follows the same verification process according to our payment policy to keep transactions secure.",
+    text: "Unfortunately, we cannot release withdrawals immediately. Every withdrawal follows our standard payment verification process before funds are released.",
     sender: "agent",
     timestamp: "10:09 AM",
   },
   {
     id: "g4-5",
-    text: "What is the complete process?",
+    text: "What are the verification steps?",
     sender: "customer",
     timestamp: "10:10 AM",
   },
   {
     id: "g4-6",
-    text: "Your withdrawal will go through these four stages:\n\nStep 1 – Withdrawal Request\n• Your withdrawal request is received and queued.\n\nStep 2 – Account Review\n• Our payment team verifies that your publisher account is authentic and eligible for payment.\n\nStep 3 – Wallet Verification\n• We verify that your selected crypto wallet can successfully receive the payment.\n\nStep 4 – Funds Received\n• Once all checks are complete, the funds are transferred successfully and marked as received.",
+    text: "Your withdrawal will follow these four stages:\n\n1. Withdrawal Request Submitted\n2. Account Under Review\n3. Wallet Verification\n4. Funds Sent Successfully",
     sender: "agent",
     timestamp: "10:11 AM",
   },
   {
     id: "g4-7",
-    text: "I really can't wait another 10–12 days. I've already waited for my previous withdrawals.",
+    text: "I've already waited a long time. Can you speed it up?",
     sender: "customer",
-    timestamp: "10:13 AM",
+    timestamp: "10:12 AM",
   },
   {
     id: "g4-8",
-    text: "I completely understand. Unfortunately, we can't skip the required verification stages because they're part of our payment policy. Every withdrawal follows the same security process.",
+    text: "I understand your concern. While we cannot bypass our verification policy, I have submitted a priority review request for your withdrawal.",
     sender: "agent",
-    timestamp: "10:14 AM",
+    timestamp: "10:13 AM",
   },
   {
     id: "g4-9",
-    text: "Is there any way to speed it up?",
+    text: "How long will it take now?",
     sender: "customer",
-    timestamp: "10:15 AM",
+    timestamp: "10:14 AM",
   },
   {
     id: "g4-10",
-    text: "While we can't guarantee an instant payment, I can submit a priority review request to our payment team. If everything is verified without any issues, your review may finish sooner than the normal processing time.",
+    text: "Standard processing may take several business days depending on verification. Since a priority review has been requested, we'll try to complete it as quickly as possible if there are no verification issues.",
     sender: "agent",
-    timestamp: "10:16 AM",
+    timestamp: "10:15 AM",
   },
   {
     id: "g4-11",
-    text: "How many days could it take after the priority request?",
+    text: "Okay, please proceed.",
     sender: "customer",
-    timestamp: "10:17 AM",
+    timestamp: "10:16 AM",
   },
   {
     id: "g4-12",
-    text: "Normally, withdrawals may take around 10–12 business days depending on verification. After submitting a priority review request, if there are no verification issues, the review is often completed within approximately 3–6 business days. Processing time can still vary depending on the payment review.",
+    text: "Done. Your priority request has been submitted successfully. We'll notify you as soon as your withdrawal status changes.",
     sender: "agent",
-    timestamp: "10:18 AM",
-  },
-  {
-    id: "g4-13",
-    text: "Please submit the priority request for me.",
-    sender: "customer",
-    timestamp: "10:19 AM",
-  },
-  {
-    id: "g4-14",
-    text: "Certainly. I've submitted a priority review request on your behalf. We'll do our best to have your withdrawal reviewed as quickly as possible while following our verification policy.",
-    sender: "agent",
-    timestamp: "10:20 AM",
-  },
-  {
-    id: "g4-15",
-    text: "Thank you. I hope it gets completed soon.",
-    sender: "customer",
-    timestamp: "10:21 AM",
-  },
-  {
-    id: "g4-16",
-    text: "You're welcome. We'll notify you as soon as your withdrawal status changes. Thank you for your patience.",
-    sender: "agent",
-    timestamp: "10:22 AM",
+    timestamp: "10:17 AM",
   },
 ]
 
@@ -595,13 +571,13 @@ export default function LiveChatBot() {
               </div>
             )}
 
-            {/* G4 Priority Confirmation Dialog */}
+            {/* G4 Withdrawal Confirmation Dialog */}
             {showPriorityConfirmation && (
               <div className="flex justify-center py-4">
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center max-w-sm">
-                  <p className="text-sm font-semibold text-blue-900 mb-3">✓ Priority Review Submitted</p>
+                  <p className="text-sm font-semibold text-blue-900 mb-3">Withdrawal Request Submitted</p>
                   <p className="text-xs text-blue-800 mb-4">
-                    Your new withdrawal request has been submitted successfully. A priority review request has also been sent to the payment team. You'll receive a notification when the withdrawal status changes.
+                    Your withdrawal request has been received successfully and is currently in the verification process.
                   </p>
                   <div className="flex gap-2 justify-center">
                     <Button
