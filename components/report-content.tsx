@@ -231,7 +231,7 @@ const reportData = {
 const statisticsTotals = {
   impressions: 421616,
   clicks: 11253,
-  revenue: 9505.99,
+  revenue: 4220.89,
   ecpm: 82.71,
   ctr: 2.67,
 }
