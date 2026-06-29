@@ -82,13 +82,13 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
 
   const availableBalance = 1194.46
   const pendingBalance = 1120.33
-  const thisMonthEarnings = 2154.42
+  const thisMonthEarnings = 2350.20
   const lastMonthEarnings = 2141.14
   const thisMonthForecast = 1673.33
   const growthRate = ((thisMonthEarnings - lastMonthEarnings) / lastMonthEarnings * 100).toFixed(1)
   const forecastGrowth = ((thisMonthForecast - thisMonthEarnings) / thisMonthEarnings * 100).toFixed(1)
   const totalPayments = 590.22
-  const totalEarnings = 9310.21
+  const totalEarnings = 9505.99
   const nextWithdrawalDate = "2026-06-16"
 
   const allReportData = [
@@ -137,6 +137,9 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     { date: "Jun 24, 2026", impressions: 12322, clicks: 349, revenue: 81.89, ctr: "2.83%", ecpm: "82.88" },
     { date: "Jun 25, 2026", impressions: 12765, clicks: 347, revenue: 83.99, ctr: "2.72%", ecpm: "83.05" },
     { date: "Jun 26, 2026", impressions: 5422, clicks: 189, revenue: 43.89, ctr: "3.49%", ecpm: "82.88" },
+    { date: "Jun 27, 2026", impressions: 12985, clicks: 343, revenue: 81.45, ctr: "2.64%", ecpm: "81.98" },
+    { date: "Jun 28, 2026", impressions: 12995, clicks: 347, revenue: 83.99, ctr: "2.67%", ecpm: "83.05" },
+    { date: "Jun 29, 2026", impressions: 4662, clicks: 196, revenue: 30.34, ctr: "4.20%", ecpm: "81.28" },
     // Auto-daily placeholder for today will be added below
   ]
 
@@ -159,6 +162,9 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
   const finalAllReportData = allReportDataWithToday
 
   const baseRecentActivityData = [
+    { date: "Jun 29, 2026", impressions: 4662, clicks: 196, revenue: 30.34, ctr: "4.20%", ecpm: "81.28" },
+    { date: "Jun 28, 2026", impressions: 12995, clicks: 347, revenue: 83.99, ctr: "2.67%", ecpm: "83.05" },
+    { date: "Jun 27, 2026", impressions: 12985, clicks: 343, revenue: 81.45, ctr: "2.64%", ecpm: "81.98" },
     { date: "Jun 26, 2026", impressions: 5422, clicks: 189, revenue: 43.89, ctr: "3.49%", ecpm: "82.88" },
     { date: "Jun 25, 2026", impressions: 12765, clicks: 347, revenue: 83.99, ctr: "2.72%", ecpm: "83.05" },
     { date: "Jun 24, 2026", impressions: 12322, clicks: 349, revenue: 81.89, ctr: "2.83%", ecpm: "82.88" },
@@ -166,9 +172,6 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     { date: "Jun 22, 2026", impressions: 12765, clicks: 347, revenue: 83.99, ctr: "2.72%", ecpm: "83.05" },
     { date: "Jun 21, 2026", impressions: 12698, clicks: 345, revenue: 83.45, ctr: "2.72%", ecpm: "82.74" },
     { date: "Jun 20, 2026", impressions: 12621, clicks: 343, revenue: 82.93, ctr: "2.72%", ecpm: "82.33" },
-    { date: "Jun 19, 2026", impressions: 12564, clicks: 340, revenue: 82.45, ctr: "2.70%", ecpm: "81.98" },
-    { date: "Jun 18, 2026", impressions: 12499, clicks: 349, revenue: 81.09, ctr: "2.79%", ecpm: "80.43" },
-    { date: "Jun 17, 2026", impressions: 12664, clicks: 341, revenue: 81.75, ctr: "2.69%", ecpm: "81.43" },
   ]
 
   // Ensure today's entry exists with auto-daily placeholder
@@ -695,7 +698,7 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
   }, [filteredReportData])
 
   // Display totals - use calculated when filters are active, otherwise use fixed totals
-  const displayTotalRevenue = dashboardDateRange !== null ? calculatedTotalRevenue : 9310.21 // Fixed total earnings
+  const displayTotalRevenue = dashboardDateRange !== null ? calculatedTotalRevenue : 9505.99 // Fixed total earnings
   const displayTotalClicks = dashboardDateRange !== null ? calculatedTotalClicks : 9876 // Total clicks
   const displayTotalImpressions = dashboardDateRange !== null ? calculatedTotalImpressions : 354237 // Total impressions
 
