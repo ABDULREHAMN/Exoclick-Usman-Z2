@@ -78,7 +78,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
       date: "05 Jun 2026",
       method: "Payoneer",
       amount: "$1120.33",
-      status: "Pending",
+      status: "Cancelled",
       email: "safdarhussainsonazir@gmail.com",
       verified: true,
     },
@@ -87,7 +87,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
       date: "16 Jun 2026",
       method: "Payoneer",
       amount: "$1280.33",
-      status: "Pending",
+      status: "Cancelled",
       email: "safdarhussainsonazir@gmail.com",
       verified: true,
     },
@@ -129,8 +129,8 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
     // All withdrawals must be manually created and approved by admin
   }, [withdrawalHistory])
 
-  const availableBalance = 1230.54
-  const pendingBalance = 2400.66
+  const availableBalance = 3631.20
+  const pendingBalance = 0.00
   const totalEarnings = 4220.89
   const totalPayments = 590.22
   const thisMonthEarnings = 2350.20

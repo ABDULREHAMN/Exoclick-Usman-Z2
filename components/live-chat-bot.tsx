@@ -436,13 +436,12 @@ export default function LiveChatBot() {
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 border-b rounded-t-lg">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-semibold text-lg">Sophia Wilson</h3>
+                <h3 className="font-semibold text-lg">ExoClick Publisher Support</h3>
                 <div className="flex items-center gap-2 text-xs">
                   <span className="inline-block w-2 h-2 bg-green-400 rounded-full"></span>
-                  <span>Live Support Agent</span>
+                  <span>Online</span>
                 </div>
               </div>
-              <span className="bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">Live Agent</span>
             </div>
           </div>
 
