@@ -1,9 +1,10 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { MessageCircle, X } from "lucide-react"
+import { MessageCircle, X, Send, Paperclip, Smile } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -277,12 +278,113 @@ const FULL_CONVERSATION: ChatMessage[] = [
     sender: "agent",
     timestamp: "10:04 AM",
   },
+  // G4 - Withdrawal Processing Conversation
+  {
+    id: "g4-1",
+    text: "I've added my crypto wallet and submitted a new withdrawal request. Could you please check if everything looks okay?",
+    sender: "customer",
+    timestamp: "10:06 AM",
+  },
+  {
+    id: "g4-2",
+    text: "Thank you. I've checked your account. Your crypto wallet has been added successfully, and your new withdrawal request has been created. Everything looks good from our side.",
+    sender: "agent",
+    timestamp: "10:07 AM",
+  },
+  {
+    id: "g4-3",
+    text: "Can this withdrawal be completed today? I've already waited a long time for my previous withdrawals.",
+    sender: "customer",
+    timestamp: "10:08 AM",
+  },
+  {
+    id: "g4-4",
+    text: "I understand your concern. However, we can't release withdrawals immediately. Every withdrawal follows the same verification process according to our payment policy to keep transactions secure.",
+    sender: "agent",
+    timestamp: "10:09 AM",
+  },
+  {
+    id: "g4-5",
+    text: "What is the complete process?",
+    sender: "customer",
+    timestamp: "10:10 AM",
+  },
+  {
+    id: "g4-6",
+    text: "Your withdrawal will go through these four stages:\n\nStep 1 – Withdrawal Request\n• Your withdrawal request is received and queued.\n\nStep 2 – Account Review\n• Our payment team verifies that your publisher account is authentic and eligible for payment.\n\nStep 3 – Wallet Verification\n• We verify that your selected crypto wallet can successfully receive the payment.\n\nStep 4 – Funds Received\n• Once all checks are complete, the funds are transferred successfully and marked as received.",
+    sender: "agent",
+    timestamp: "10:11 AM",
+  },
+  {
+    id: "g4-7",
+    text: "I really can't wait another 10–12 days. I've already waited for my previous withdrawals.",
+    sender: "customer",
+    timestamp: "10:13 AM",
+  },
+  {
+    id: "g4-8",
+    text: "I completely understand. Unfortunately, we can't skip the required verification stages because they're part of our payment policy. Every withdrawal follows the same security process.",
+    sender: "agent",
+    timestamp: "10:14 AM",
+  },
+  {
+    id: "g4-9",
+    text: "Is there any way to speed it up?",
+    sender: "customer",
+    timestamp: "10:15 AM",
+  },
+  {
+    id: "g4-10",
+    text: "While we can't guarantee an instant payment, I can submit a priority review request to our payment team. If everything is verified without any issues, your review may finish sooner than the normal processing time.",
+    sender: "agent",
+    timestamp: "10:16 AM",
+  },
+  {
+    id: "g4-11",
+    text: "How many days could it take after the priority request?",
+    sender: "customer",
+    timestamp: "10:17 AM",
+  },
+  {
+    id: "g4-12",
+    text: "Normally, withdrawals may take around 10–12 business days depending on verification. After submitting a priority review request, if there are no verification issues, the review is often completed within approximately 3–6 business days. Processing time can still vary depending on the payment review.",
+    sender: "agent",
+    timestamp: "10:18 AM",
+  },
+  {
+    id: "g4-13",
+    text: "Please submit the priority request for me.",
+    sender: "customer",
+    timestamp: "10:19 AM",
+  },
+  {
+    id: "g4-14",
+    text: "Certainly. I've submitted a priority review request on your behalf. We'll do our best to have your withdrawal reviewed as quickly as possible while following our verification policy.",
+    sender: "agent",
+    timestamp: "10:20 AM",
+  },
+  {
+    id: "g4-15",
+    text: "Thank you. I hope it gets completed soon.",
+    sender: "customer",
+    timestamp: "10:21 AM",
+  },
+  {
+    id: "g4-16",
+    text: "You're welcome. We'll notify you as soon as your withdrawal status changes. Thank you for your patience.",
+    sender: "agent",
+    timestamp: "10:22 AM",
+  },
 ]
 
 export default function LiveChatBot() {
   const [isOpen, setIsOpen] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
-  const [phase, setPhase] = useState<"g1-g2" | "g3">("g1-g2")
+  const [showPriorityConfirmation, setShowPriorityConfirmation] = useState(false)
+  const [phase, setPhase] = useState<"g1-g2" | "g3" | "g4">("g1-g2")
+  const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [input, setInput] = useState("")
+  const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -291,7 +393,60 @@ export default function LiveChatBot() {
 
   useEffect(() => {
     scrollToBottom()
-  }, [phase])
+  }, [messages, isTyping])
+
+  const getCurrentTime = () => {
+    const now = new Date()
+    const hours = String(now.getHours()).padStart(2, "0")
+    const minutes = String(now.getMinutes()).padStart(2, "0")
+    const period = now.getHours() >= 12 ? "PM" : "AM"
+    const displayHours = now.getHours() % 12 || 12
+    return `${String(displayHours).padStart(2, "0")}:${minutes} ${period}`
+  }
+
+  const handleSendMessage = async (text: string) => {
+    if (!text.trim()) return
+
+    // Add customer message
+    const customerMessage: ChatMessage = {
+      id: `custom-${Date.now()}`,
+      text: text.trim(),
+      sender: "customer",
+      timestamp: getCurrentTime(),
+    }
+
+    setMessages((prev) => [...prev, customerMessage])
+    setInput("")
+
+    // Show typing indicator
+    setIsTyping(true)
+
+    // Wait 2-3 seconds
+    await new Promise((resolve) => setTimeout(resolve, 2000 + Math.random() * 1000))
+
+    // Add agent reply
+    const agentMessage: ChatMessage = {
+      id: `auto-reply-${Date.now()}`,
+      text: "Thank you for contacting ExoClick Publisher Support. We've received your message successfully. Our support team will review your request shortly and get back to you as soon as possible.",
+      sender: "agent",
+      timestamp: getCurrentTime(),
+    }
+
+    setIsTyping(false)
+    setMessages((prev) => [...prev, agentMessage])
+
+    // Check if we've reached the end of G4 conversation
+    if (phase === "g4" && messages.length >= FULL_CONVERSATION.length - 2) {
+      setTimeout(() => setShowPriorityConfirmation(true), 1500)
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault()
+      handleSendMessage(input)
+    }
+  }
 
   const handleCancelConfirmation = (confirmed: boolean) => {
     if (confirmed) {
@@ -323,10 +478,20 @@ export default function LiveChatBot() {
     }
   }
 
-  const displayMessages =
-    phase === "g1-g2" ? FULL_CONVERSATION.slice(0, -16) : FULL_CONVERSATION
+  const getDisplayMessages = (): ChatMessage[] => {
+    if (phase === "g1-g2") {
+      return FULL_CONVERSATION.slice(0, 28) // G1 + G2 messages
+    } else if (phase === "g3") {
+      return FULL_CONVERSATION.slice(0, 44) // G1 + G2 + G3 messages
+    } else {
+      return [...FULL_CONVERSATION, ...messages] // G1 + G2 + G3 + G4 + custom
+    }
+  }
 
-  const showConfirmationDialog = phase === "g1-g2" && displayMessages.length === FULL_CONVERSATION.slice(0, -16).length
+  const displayMessages = getDisplayMessages()
+
+  const showConfirmationDialogG1G2 =
+    phase === "g1-g2" && displayMessages.length === FULL_CONVERSATION.slice(0, 28).length
 
   return (
     <>
@@ -384,7 +549,25 @@ export default function LiveChatBot() {
                 )}
               </div>
             ))}
-            {showConfirmationDialog && (
+
+            {/* Typing Indicator */}
+            {isTyping && (
+              <div className="flex gap-2">
+                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                  SW
+                </div>
+                <div className="bg-white border border-gray-200 rounded-lg rounded-bl-none px-4 py-2.5">
+                  <div className="flex gap-1">
+                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
+                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></span>
+                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* G1-G2 Confirmation Dialog */}
+            {showConfirmationDialogG1G2 && (
               <div className="flex justify-center py-4">
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center max-w-xs">
                   <p className="text-sm font-semibold text-yellow-800 mb-3">Cancel Pending Withdrawals?</p>
@@ -411,7 +594,80 @@ export default function LiveChatBot() {
                 </div>
               </div>
             )}
+
+            {/* G4 Priority Confirmation Dialog */}
+            {showPriorityConfirmation && (
+              <div className="flex justify-center py-4">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center max-w-sm">
+                  <p className="text-sm font-semibold text-blue-900 mb-3">✓ Priority Review Submitted</p>
+                  <p className="text-xs text-blue-800 mb-4">
+                    Your new withdrawal request has been submitted successfully. A priority review request has also been sent to the payment team. You'll receive a notification when the withdrawal status changes.
+                  </p>
+                  <div className="flex gap-2 justify-center">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setShowPriorityConfirmation(false)}
+                      className="text-xs"
+                    >
+                      OK
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={() => setShowPriorityConfirmation(false)}
+                      className="text-xs bg-blue-600 hover:bg-blue-700"
+                    >
+                      View Withdrawal Status
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input Area */}
+          <div className="border-t bg-white rounded-b-lg p-4 space-y-3">
+            <div className="flex gap-2">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Type your message..."
+                className="flex-1 text-sm"
+                disabled={phase !== "g4"}
+              />
+              <Button
+                size="icon"
+                variant="ghost"
+                className="h-10 w-10 text-gray-500 hover:text-gray-700"
+                disabled={phase !== "g4"}
+              >
+                <Paperclip className="h-4 w-4" />
+              </Button>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="h-10 w-10 text-gray-500 hover:text-gray-700"
+                disabled={phase !== "g4"}
+              >
+                <Smile className="h-4 w-4" />
+              </Button>
+              <Button
+                size="icon"
+                onClick={() => handleSendMessage(input)}
+                disabled={!input.trim() || phase !== "g4"}
+                className="h-10 w-10 bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
+            </div>
+            <p className="text-xs text-gray-400">
+              {phase === "g4"
+                ? "Press Enter or click Send to continue the conversation"
+                : "Chat input available after initial conversation"}
+            </p>
           </div>
         </Card>
       )}
