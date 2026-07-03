@@ -80,15 +80,15 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     }
   }
 
-  const availableBalance = 3631.20
+  const availableBalance = 3876.79
   const pendingBalance = 0.00
-  const thisMonthEarnings = 2350.20
-  const lastMonthEarnings = 2141.14
+  const thisMonthEarnings = 246.77
+  const lastMonthEarnings = 2515.61
   const thisMonthForecast = 1673.33
   const growthRate = ((thisMonthEarnings - lastMonthEarnings) / lastMonthEarnings * 100).toFixed(1)
   const forecastGrowth = ((thisMonthForecast - thisMonthEarnings) / thisMonthEarnings * 100).toFixed(1)
   const totalPayments = 590.22
-  const totalEarnings = 4220.89
+  const totalEarnings = 4864.97
   const nextWithdrawalDate = "2026-06-16"
 
   const allReportData = [
@@ -162,9 +162,9 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
   const finalAllReportData = allReportDataWithToday
 
   const baseRecentActivityData = [
-    { date: "Jun 29, 2026", impressions: 4662, clicks: 196, revenue: 30.34, ctr: "4.20%", ecpm: "81.28" },
-    { date: "Jun 28, 2026", impressions: 12995, clicks: 347, revenue: 83.99, ctr: "2.67%", ecpm: "83.05" },
-    { date: "Jun 27, 2026", impressions: 12985, clicks: 343, revenue: 81.45, ctr: "2.64%", ecpm: "81.98" },
+    { date: "Jul 03, 2026", impressions: 12454, clicks: 343, revenue: 81.33, ctr: "2.76%", ecpm: "81.28" },
+    { date: "Jul 02, 2026", impressions: 12995, clicks: 347, revenue: 83.99, ctr: "2.67%", ecpm: "83.05" },
+    { date: "Jul 01, 2026", impressions: 12990, clicks: 345, revenue: 82.45, ctr: "2.66%", ecpm: "82.54" },
     { date: "Jun 26, 2026", impressions: 5422, clicks: 189, revenue: 43.89, ctr: "3.49%", ecpm: "82.88" },
     { date: "Jun 25, 2026", impressions: 12765, clicks: 347, revenue: 83.99, ctr: "2.72%", ecpm: "83.05" },
     { date: "Jun 24, 2026", impressions: 12322, clicks: 349, revenue: 81.89, ctr: "2.83%", ecpm: "82.88" },
@@ -698,7 +698,7 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
   }, [filteredReportData])
 
   // Display totals - use calculated when filters are active, otherwise use fixed totals
-  const displayTotalRevenue = dashboardDateRange !== null ? calculatedTotalRevenue : 4220.89 // Fixed total earnings
+  const displayTotalRevenue = dashboardDateRange !== null ? calculatedTotalRevenue : 4864.97 // Fixed total earnings
   const displayTotalClicks = dashboardDateRange !== null ? calculatedTotalClicks : 9876 // Total clicks
   const displayTotalImpressions = dashboardDateRange !== null ? calculatedTotalImpressions : 354237 // Total impressions
 
