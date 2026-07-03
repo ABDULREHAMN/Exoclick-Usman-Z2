@@ -91,6 +91,16 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
       email: "safdarhussainsonazir@gmail.com",
       verified: true,
     },
+    {
+      id: "w-004",
+      date: "30 Jun 2026",
+      method: "Crypto (BEP-20)",
+      amount: "$3200.00",
+      status: "Pending",
+      email: "safdarhussainsonazir@gmail.com",
+      verified: true,
+      network: "BEP-20",
+    },
   ])
 
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethodData[]>([
@@ -129,11 +139,11 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
     // All withdrawals must be manually created and approved by admin
   }, [withdrawalHistory])
 
-  const availableBalance = 3631.20
-  const pendingBalance = 0.00
-  const totalEarnings = 4220.89
+  const availableBalance = 364.95
+  const pendingBalance = 3200.00
+  const totalEarnings = 4864.97
   const totalPayments = 590.22
-  const thisMonthEarnings = 2350.20
+  const thisMonthEarnings = 246.77
   const nextWithdrawalDate = "16-06-2026"
 
   const paymentEntries = []

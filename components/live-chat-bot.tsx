@@ -347,10 +347,8 @@ const FULL_CONVERSATION: ChatMessage[] = [
 
 export default function LiveChatBot() {
   const [isOpen, setIsOpen] = useState(false)
-  const [phase, setPhase] = useState<"g1-g2-g3-g4">("g1-g2-g3-g4")
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState("")
-  const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -359,7 +357,7 @@ export default function LiveChatBot() {
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages, isTyping])
+  }, [messages])
 
   const getCurrentTime = () => {
     const now = new Date()
@@ -369,6 +367,24 @@ export default function LiveChatBot() {
     const displayHours = now.getHours() % 12 || 12
     return `${String(displayHours).padStart(2, "0")}:${minutes} ${period}`
   }
+
+  const OFFLINE_REPLY = `Hello,
+
+Thank you for contacting ExoClick Publisher Support.
+
+Our live support service is available Monday to Friday only.
+
+Our support team is currently offline, therefore we are unable to respond to your request at this time.
+
+Your next live chat session will be available on Monday.
+
+If you've sent a message, it has been received successfully and will be reviewed once our support team is back online.
+
+Thank you for your patience and understanding.
+
+Regards,
+
+ExoClick Publisher Support`
 
   const handleSendMessage = async (text: string) => {
     if (!text.trim()) return
@@ -384,27 +400,15 @@ export default function LiveChatBot() {
     setMessages((prev) => [...prev, customerMessage])
     setInput("")
 
-    // Show typing indicator
-    setIsTyping(true)
-
-    // Wait 2-3 seconds
-    await new Promise((resolve) => setTimeout(resolve, 2000 + Math.random() * 1000))
-
-    // Add agent reply
-    const agentMessage: ChatMessage = {
-      id: `auto-reply-${Date.now()}`,
-      text: "Thank you for contacting ExoClick Publisher Support. We've received your message successfully. Our support team will review your request shortly and get back to you as soon as possible.",
+    // Add offline reply immediately
+    const offlineMessage: ChatMessage = {
+      id: `offline-reply-${Date.now()}`,
+      text: OFFLINE_REPLY,
       sender: "agent",
       timestamp: getCurrentTime(),
     }
 
-    setIsTyping(false)
-    setMessages((prev) => [...prev, agentMessage])
-
-    // Check if we've reached the end of G4 conversation
-    if (phase === "g4" && messages.length >= FULL_CONVERSATION.length - 2) {
-      setTimeout(() => setShowPriorityConfirmation(true), 1500)
-    }
+    setMessages((prev) => [...prev, offlineMessage])
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -438,11 +442,12 @@ export default function LiveChatBot() {
               <div>
                 <h3 className="font-semibold text-lg">ExoClick Publisher Support</h3>
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="inline-block w-2 h-2 bg-green-400 rounded-full"></span>
-                  <span>Online</span>
+                  <span className="inline-block w-2 h-2 bg-gray-400 rounded-full"></span>
+                  <span>🟢 Status: Offline</span>
                 </div>
               </div>
             </div>
+            <p className="text-xs mt-2 text-blue-100">Monday–Friday Support</p>
           </div>
 
           {/* Messages */}
@@ -473,24 +478,6 @@ export default function LiveChatBot() {
                 )}
               </div>
             ))}
-
-            {/* Typing Indicator */}
-            {isTyping && (
-              <div className="flex gap-2">
-                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-                  SW
-                </div>
-                <div className="bg-white border border-gray-200 rounded-lg rounded-bl-none px-4 py-2.5">
-                  <div className="flex gap-1">
-                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
-                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></span>
-                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-
 
             <div ref={messagesEndRef} />
           </div>
