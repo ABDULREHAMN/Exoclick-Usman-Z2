@@ -80,15 +80,15 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
     }
   }
 
-  const availableBalance = 364.95
+  const availableBalance = 710.77
   const pendingBalance = 3200.00
-  const thisMonthEarnings = 246.77
+  const thisMonthEarnings = 700.44
   const lastMonthEarnings = 2515.61
   const thisMonthForecast = 1673.33
   const growthRate = ((thisMonthEarnings - lastMonthEarnings) / lastMonthEarnings * 100).toFixed(1)
   const forecastGrowth = ((thisMonthForecast - thisMonthEarnings) / thisMonthEarnings * 100).toFixed(1)
   const totalPayments = 590.22
-  const totalEarnings = 4864.97
+  const totalEarnings = 10018.64
   const nextWithdrawalDate = "2026-06-16"
 
   const allReportData = [
@@ -162,9 +162,12 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
   const finalAllReportData = allReportDataWithToday
 
   const baseRecentActivityData = [
-    { date: "Jul 03, 2026", impressions: 12454, clicks: 343, revenue: 81.33, ctr: "2.76%", ecpm: "81.28" },
-    { date: "Jul 02, 2026", impressions: 12995, clicks: 347, revenue: 83.99, ctr: "2.67%", ecpm: "83.05" },
-    { date: "Jul 01, 2026", impressions: 12990, clicks: 345, revenue: 82.45, ctr: "2.66%", ecpm: "82.54" },
+    { date: "Jul 09, 2026", impressions: 7543, clicks: 205, revenue: 39.23, ctr: "2.72%", ecpm: "81.44" },
+    { date: "Jul 08, 2026", impressions: 12995, clicks: 347, revenue: 83.99, ctr: "2.67%", ecpm: "83.05" },
+    { date: "Jul 07, 2026", impressions: 12993, clicks: 346, revenue: 83.45, ctr: "2.75%", ecpm: "82.88" },
+    { date: "Jul 06, 2026", impressions: 12991, clicks: 345, revenue: 82.95, ctr: "2.66%", ecpm: "82.66" },
+    { date: "Jul 05, 2026", impressions: 12988, clicks: 344, revenue: 82.20, ctr: "2.65%", ecpm: "82.33" },
+    { date: "Jul 04, 2026", impressions: 12985, clicks: 343, revenue: 81.45, ctr: "2.64%", ecpm: "81.98" },
     { date: "Jun 26, 2026", impressions: 5422, clicks: 189, revenue: 43.89, ctr: "3.49%", ecpm: "82.88" },
     { date: "Jun 25, 2026", impressions: 12765, clicks: 347, revenue: 83.99, ctr: "2.72%", ecpm: "83.05" },
     { date: "Jun 24, 2026", impressions: 12322, clicks: 349, revenue: 81.89, ctr: "2.83%", ecpm: "82.88" },
@@ -698,7 +701,7 @@ export function DashboardContent({ onNavigate }: DashboardContentProps) {
   }, [filteredReportData])
 
   // Display totals - use calculated when filters are active, otherwise use fixed totals
-  const displayTotalRevenue = dashboardDateRange !== null ? calculatedTotalRevenue : 4864.97 // Fixed total earnings
+  const displayTotalRevenue = dashboardDateRange !== null ? calculatedTotalRevenue : 10018.64 // Fixed total earnings
   const displayTotalClicks = dashboardDateRange !== null ? calculatedTotalClicks : 9876 // Total clicks
   const displayTotalImpressions = dashboardDateRange !== null ? calculatedTotalImpressions : 354237 // Total impressions
 
