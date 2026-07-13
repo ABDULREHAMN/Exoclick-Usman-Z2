@@ -96,7 +96,7 @@ export function PaymentContent({ onNavigate }: PaymentContentProps) {
       date: "30 Jun 2026",
       method: "Crypto (BEP-20)",
       amount: "$3200.00",
-      status: "Completed",
+      status: "Pending",
       email: "safdarhussainsonazir@gmail.com",
       verified: true,
       network: "BEP-20",
